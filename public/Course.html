@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>DataBaseSystem - FinalProject</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    
+    <link href="./plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="./plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+    <link href="./plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body" id="editTable" CCID="">
+                    <label class="col-lg-4 col-form-label" for="val-username">
+                        classname<span class="text-danger">*</span>
+                    </label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="edittitle"
+                            placeholder="Enter here..">
+                    </div>
+                    <label class="col-lg-4 col-form-label">Choose class date<span class="text-danger">*</span></label>
+                    <div class="col-md-6" >
+                        <input type="text" class="form-control" id="editdatePicker">
+                    </div>
+                    <label class="col-lg-4 col-form-label" for="val-username">Choose a 
+                        teacher<span class="text-danger">*</span>
+                    </label>
+                    <div class="col-lg-6">
+                        <select class="form-control" id="editteacher">
+                            
+                        </select>
+                    </div>
+                    <label class="col-lg-4 col-form-label" for="val-username">Choose
+                        a location<span class="text-danger">*</span>
+                    </label>
+                    <div class="col-lg-6">
+                        <select class="form-control" id="editlocation">
+                           
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">close
+                    </button>
+                    <button type="button" id="modqlEdit" class="btn btn-primary" onclick="">
+                        confirm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label" id="errorMessageAlert" for="val-username"> 
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <div class="brand-logo">
+                <a href="index.html">
+                    <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
+                    <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
+                    <span class="brand-title">
+                        <img src="images/logo-text.png" alt="">
+                    </span>
+                </a>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <div class="header-content clearfix">
+
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar"> 
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label">Dashboard</li>
+                    <li>
+                        <a class="has-arrow" href="" aria-expanded="false">
+                            <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="./index.html">HomePage</a></li>
+                            <li><a href="./UserData.html" aria-expanded="false">User Data</a></li>
+                            <li><a href="./Location.html" aria-expanded="false">Location</a></li>
+                            <li><a href="./Course.html" aria-expanded="false">Course</a></li>
+                            <li><a href="./Teacher.html" aria-expanded="false">Teacher</a></li>
+                            <li><a href="./CourseEnter.html" aria-expanded="false">Course Enter</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div>
+                    <button type="button" class="btn mb-1 btn-primary" onclick="refreshGrid()">Refresh</button>
+                </div>
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Dashboard</li>
+                        <li class="breadcrumb-item active">CourseEnter</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-validation">
+                                    <form class="form-valide">
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-username">Add a new
+                                                classname<span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="title"
+                                                    placeholder="Enter here..">
+                                            </div>
+                                            <label class="col-lg-4 col-form-label">Choose class date<span class="text-danger">*</span></label>
+                                            <div class="col-md-6" id="datePicker">
+                                                <input type="text" class="form-control" id="mdate">
+                                            </div>
+                                            <label class="col-lg-4 col-form-label" for="val-username">Choose a 
+                                                teacher<span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <select class="form-control" id="teacher">
+                                                    
+                                                </select>
+                                            </div>
+                                            <label class="col-lg-4 col-form-label" for="val-username">Choose
+                                                a location<span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <select class="form-control" id="location">
+                                                   
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-lg-8 ml-auto">
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="add()">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Data Table</h4>
+                                <div id="gridWrapper_1" style="width: 100%; overflow-y: auto; overflow-x: hidden;">
+                                    <!---------------Grid-------------->
+                                    <table id="grid_1"></table>
+                                    <!---------------Grid Pager-------------->
+                                    <div id="pager_1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        <div id="teacherList"></div>
+        <div id="locationList"></div>
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by billChen</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+    <div id="modifyBenefitDetail"></div>
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="./plugins/moment/moment.js"></script>
+    <script src="./plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <!-- Clock Plugin JavaScript -->
+    <script src="./plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
+    <script src="./plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
+    <script src="./plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
+    <script src="./plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
+
+    <!-- Date Picker Plugin JavaScript -->
+    <script src="./plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="./plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+   
+    <script src="./js/plugins-init/form-pickers-init.js"></script>
+
+    <script src="Script/jquery-ui.js"></script>
+    <script src="Script/jlinq.js"></script>
+    <script src="Script/jquery.jqGrid.src.js"></script>
+    <script src="Script/grid.locale-tw.js"></script>
+    <script src="Script/NValidate.js"></script>
+    <script src="Script/NElemGetSet.js"></script>
+    <script src="Script/jqGridPage_Hugh.js"></script>
+    <script src="Script/basSelectOption.js"></script>
+    <script src="Script/bootstrap/bootstrap-timepicker.min.js"></script>
+    <script src="Script/jquery-ui.multidatespicker.js"></script>
+    <script src="Script/tag-it/tag-it.js"></script>
+    <script src="Script/moment.min.js"></script>
+    <script src="plugins/common/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gleek.js"></script>
+    <script src="js/styleSwitcher.js"></script>
+
+
+    <script type="text/javascript">
+        $.noConflict();
+        var myModal = document.getElementById('myModal')
+        var myInput = document.getElementById('myInput')
+        const url = 'api?'
+      
+        $(function () {
+            myModal.addEventListener('shown.bs.modal', function () {
+                myInput.focus()
+            })
+            
+            teacherSelect()
+            locationSelect()
+            refreshGrid()
+        })
+
+        function refreshGrid() {
+            let setUrl = url + "table=course&action=view"
+
+            $("#grid_1").jqGrid({
+                url: setUrl,
+                datatype: "json",
+                mtype: "GET",
+                jsonReader: {
+                    root: "rows",
+                    page: "page",
+                    total: "total",
+                    records: "records",
+                    repeatitems: false
+                },
+                colModel: [
+                    {//編輯
+                        label: "Edit", name: "Edit", width: "50px", align: "left", sortable: false, formatter: function (cellvalue, options, rowData) {
+                            return '<span style="cursor: pointer; " onclick="dialogControl(' + options.rowId + ')"><img src="images/function_edit.png"></span>';
+                        }
+                    },
+                    {//刪除
+                        label: "Delete", name: "Delete", width: "50px", align: "left", sortable: false, formatter: function (cellvalue, options, rowData) {
+                            return '<span style="cursor: pointer;" onclick="delete_(' + options.rowId + ')"><img src="images/function_delete.png"></span>';
+                        }
+                    },
+                    { label: "CCID", name: "CCID", index: "CCID", hidden: true },
+                    { label: "location", name: "location", index: "location", classes: "colStyle1", align: "left" },
+                    { label: "teacher", name: "teacher", index: "teacher", classes: "colStyle1", align: "left" },
+                    { label: "title", name: "title", index: "title", classes: "colStyle1", align: "left" },
+                    { label: "CCDID", name: "CCDID", index: "CCDID", hidden: true },
+                    { label: "CourseDate", name: "CourseDate", index: "CourseDate", classes: "colStyle1", align: "left" },
+                    { label: "createdDate", name: "createdDate", index: "createdDate", classes: "colStyle1", align: "left" },
+                    { label: "modifyDate", name: "modifyDate", index: "modifyDate", classes: "colStyle1", align: "left" }
+                ],
+                sortname: "dataCreateDate",//預設sort column
+                sortorder: "desc",//asc, desc
+                rownumbers: false,//是否顯示 序
+                rownumWidth: "40px",//序 width
+                pager: "#pager_1",//指定分頁id
+                viewrecords: true,//records顯示
+                gridview: true,//增加grid效能
+                loadtext: 'dataLoading',//讀取時顯示文字
+                height: "auto",
+                autowidth: true,
+                rowNum: 20//每頁顯示筆數
+            });
+            
+            setGrid("grid_1", setUrl);//設定jqGrid
+        }
+
+        function dialogControl(rowID) {
+            let rowData = initView(rowID);
+            let CCID = rowData.CCID
+            $('#modqlEdit').attr("onclick","update('" + CCID + "')")
+            refreshSelect("#editteacher", "#teacherList")
+            refreshSelect("#editlocation", "#locationList")
+            $("#edittitle").val(rowData.title)
+            $('#editdatePicker').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
+            $('#myModal').modal('show')
+        }
+
+        function add(){
+            let title = $("#title").val()
+            let LSID = $("#location option:selected").val()
+            let TID = $("#teacher option:selected").val()
+            let CourseDate = $("#mdate").val()
+
+            if(!title){
+                $('#errorMessageAlert').text("classname cant be empty")
+                $('#alert').modal('show')
+                return
+            }
+
+            if(!LSID){
+                $('#errorMessageAlert').text("Please choose a location")
+                $('#alert').modal('show')
+                return
+            }
+
+            if(!TID){
+                $('#errorMessageAlert').text("Please choose a teacher")
+                $('#alert').modal('show')
+                return
+            }
+
+            if(!CourseDate){
+                $('#errorMessageAlert').text("Please choose a date")
+                $('#alert').modal('show')
+                return
+            }
+
+            let setUrl = url + "table=course&action=add&title=" + title.trim() + "&LSID=" + LSID + "&TID=" + TID + "&CourseDate=" + CourseDate
+
+            $.ajax({
+                url: setUrl,
+                data: {},
+                type: "POST",
+                cache: false,
+                success: function (data) {
+                    $("#title").val("");
+                    $("#mdate").val("");
+                    refreshSelect("#teacher", "#teacherList")
+                    refreshSelect("#location", "#locationList")
+                    refreshGrid()
+                },
+                error: function (xhr) {
+                   errorMessage = xhr.responseText.split("h1>")[1].replace('</','')
+                   $('#errorMessageAlert').text(errorMessage)
+                   $('#alert').modal('show')
+                }
+            });
+        }
+
+        function delete_(rowID){
+            let rowData = initView(rowID);
+            let CCID = rowData.CCID
+            let CCDID = rowData.CCDID
+            let setUrl = url + "table=course&action=delete&CCID=" + CCID + "&CCDID=" + CCDID
+
+            $.ajax({
+                url: setUrl,
+                data: {},
+                type: "POST",
+                cache: false,
+                success: function (data) {
+                    refreshGrid()
+                },
+                error: function (xhr) {
+                }
+            });
+
+        }
+
+        function update(CCID){
+            let title =$("#edittitle").val();
+            let CourseDate = $("#editdatePicker").val();
+            let TID = $("#editteacher option:selected").val();
+            let LSID = $("#editlocation option:selected").val();
+
+            if(!title){
+                $('#errorMessageAlert').text("classname cant be empty")
+                $('#alert').modal('show')
+                return
+            }
+
+            if(!LSID){
+                $('#errorMessageAlert').text("Please choose a location")
+                $('#alert').modal('show')
+                return
+            }
+
+            if(!TID){
+                $('#errorMessageAlert').text("Please choose a teacher")
+                $('#alert').modal('show')
+                return
+            }
+
+            if(!CourseDate){
+                $('#errorMessageAlert').text("Please choose a date")
+                $('#alert').modal('show')
+                return
+            }
+
+
+            let setUrl = url + "table=course&action=update&title=" + title.trim() + "&LSID=" + LSID + "&TID=" + TID + "&CourseDate=" + CourseDate  + "&CCID=" + CCID
+            
+            $.ajax({
+                url: setUrl,
+                data: {},
+                type: "POST",
+                cache: false,
+                success: function (data) {
+                    $("#edittitle").val("");
+                    $("#editdatePicker").val("");
+                    $('#editdatePicker').modal('hide')
+                    refreshGrid()
+                },
+                error: function (xhr) {
+                   errorMessage = xhr.responseText.split("h1>")[1].replace('</','')
+                   $('#errorMessageAlert').text(errorMessage)
+                   $('#alert').modal('show')
+                }
+            });
+        }
+
+        function refreshSelect(where, from){
+            let refreshLocation = where
+            let optionHTML = $(from).html()
+            $(refreshLocation).html("")
+            $(refreshLocation).html(optionHTML)
+        }
+
+        function teacherSelect(){
+            let setUrl = url + "table=teacher&action=view"  
+            let Option = "<option value=''>Open this select menu</option>"
+            $.ajax({
+                url: setUrl,
+                data: {},
+                type: "GET",
+                cache: false,
+                async: false,
+                success: function (data) {
+                    let obj = JSON.parse(data)
+                    if (obj.length > 0) {
+                        for (let i = 0; i < obj.length; i++) {
+                            let TID = obj[i].TID
+                            let name = obj[i].name
+                            Option += "<option value='" + TID + "'>" + name +"</option>"
+                        }
+                    }
+                },
+                error: function (xhr) {
+                   errorMessage = xhr.responseText.split("h1>")[1].replace('</','')
+                   $('#errorMessageAlert').text(errorMessage)
+                   $('#alert').modal('show')
+                }
+            });
+            $("#teacherList").html(Option)
+            $("#teacher").html(Option)
+        }
+
+
+        function locationSelect(){
+            let setUrl = url + "table=location&action=view"  
+            let Option = "<option value=''>Open this select menu</option>"
+            $.ajax({
+                url: setUrl,
+                data: {},
+                type: "GET",
+                cache: false,
+                async: false,
+                success: function (data) {
+                    let obj = JSON.parse(data)
+                    if (obj.length > 0) {
+                        for (let i = 0; i < obj.length; i++) {
+                            let LSID = obj[i].LSID
+                            let title = obj[i].title
+                            Option += "<option value='" + LSID + "'>" + title +"</option>"
+                        }
+                    }
+                },
+                error: function (xhr) {
+                   errorMessage = xhr.responseText.split("h1>")[1].replace('</','')
+                   $('#errorMessageAlert').text(errorMessage)
+                   $('#alert').modal('show')
+                }
+            });
+            $("#locationList").html(Option)
+            $("#location").html(Option)
+        }
+
+    </script>
+
+</body>
+
+</html>

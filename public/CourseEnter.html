@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>DataBaseSystem - FinalProject</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+    <link href="./plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-lg-4 col-form-label" id="errorMessageAlert" for="val-username"> 
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <div class="brand-logo">
+                <a href="index.html">
+                    <b class="logo-abbr"><img src="images/logo.png" alt=""> </b>
+                    <span class="logo-compact"><img src="./images/logo-compact.png" alt=""></span>
+                    <span class="brand-title">
+                        <img src="images/logo-text.png" alt="">
+                    </span>
+                </a>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <div class="header-content clearfix">
+
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar"> 
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label">Dashboard</li>
+                    <li>
+                        <a class="has-arrow" href="" aria-expanded="false">
+                            <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="./index.html">HomePage</a></li>
+                            <li><a href="./UserData.html" aria-expanded="false">User Data</a></li>
+                            <li><a href="./Location.html" aria-expanded="false">Location</a></li>
+                            <li><a href="./Course.html" aria-expanded="false">Course</a></li>
+                            <li><a href="./Teacher.html" aria-expanded="false">Teacher</a></li>
+                            <li><a href="./CourseEnter.html" aria-expanded="false">Course Enter</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div>
+                    <button type="button" class="btn mb-1 btn-primary" onclick="refreshGrid()">Refresh</button>
+                </div>
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Dashboard</li>
+                        <li class="breadcrumb-item active">UserData</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-validation">
+                                    <form class="form-valide">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="active-member">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-xs mb-0">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Exit</th>
+                                                                            <th>Name</th>
+                                                                            <th>Phonenumber</th>
+                                                                            <th>Sex</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody id = 'couseStatus'>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                        
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Data Table</h4>
+                                <div id="gridWrapper_1" style="width: 100%; overflow-y: auto; overflow-x: hidden;">
+                                    <!---------------Grid-------------->
+                                    <table id="grid_1"></table>
+                                    <!---------------Grid Pager-------------->
+                                    <div id="pager_1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        <div id="userList"></div>
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by billChen</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+    <div id="modifyBenefitDetail"></div>
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="Script/jquery-ui.js"></script>
+    <script src="Script/jlinq.js"></script>
+    <script src="Script/jquery.jqGrid.src.js"></script>
+    <script src="Script/grid.locale-tw.js"></script>
+    <script src="Script/NValidate.js"></script>
+    <script src="Script/NElemGetSet.js"></script>
+    <script src="Script/jqGridPage_Hugh.js"></script>
+    <script src="Script/basSelectOption.js"></script>
+    <script src="Script/bootstrap/bootstrap-timepicker.min.js"></script>
+    <script src="Script/jquery-ui.multidatespicker.js"></script>
+    <script src="Script/tag-it/tag-it.js"></script>
+    <script src="Script/moment.min.js"></script>
+    <script src="plugins/common/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gleek.js"></script>
+    <script src="js/styleSwitcher.js"></script>
+    <script type="text/javascript">
+    $.noConflict();
+        var myModal = document.getElementById('myModal')
+        var myInput = document.getElementById('myInput')
+        const url = 'api?'
+
+        $(function () {
+            myModal.addEventListener('shown.bs.modal', function () {
+                myInput.focus()
+            })
+            
+            userSelect()
+            refreshGrid()
+
+        })
+
+        function refreshGrid() {
+            let setUrl = url + "table=courseEnter&action=courseEnterandNum"
+            let userList = $("#userList").html()
+            $("#couseStatus").html("")
+
+            $("#grid_1").jqGrid({
+                url: setUrl,
+                datatype: "json",
+                mtype: "GET",
+                jsonReader: {
+                    root: "rows",
+                    page: "page",
+                    total: "total",
+                    records: "records",
+                    repeatitems: false
+                },
+                colModel: [
+                    {//編輯
+                        label: "Edit", name: "Edit", width: "100px", align: "left", sortable: false, formatter: function (cellvalue, options, rowData) {
+                            return '<select class="form-control" id="'+ rowData.CCID +'">'+ userList +'</select>';
+                        }
+                    },
+                    {  label: "Join", name: "Join", width: "50px", align: "left", sortable: false, formatter: function (cellvalue, options, rowData) {
+                            return ' <button type="button" class="btn btn-primary" onclick="joinClass(\''+ rowData.CCID +'\')">Submit</button>';
+                        }
+                    },
+                    {
+						label: "View", name: "View", width: "50px", align: "left", sortable: false, formatter: function(cellvalue, options, rowData){
+							return '<span style="cursor: pointer;" onclick="viewRow(\''+ rowData.CCID +'\')"><img src="images/icon_view_mode.png"></span>';
+						}
+					},
+                    { label: "CCID", name: "CCID", index: "CCID", hidden: true },
+                    { label: "location", name: "location", index: "location", classes: "colStyle1", align: "left" },
+                    { label: "teacher", name: "teacher", index: "teacher", classes: "colStyle1", align: "left" },
+                    { label: "title", name: "title", index: "title", classes: "colStyle1", align: "left" },
+                    { label: "CourseDate", name: "CourseDate", index: "CourseDate", classes: "colStyle1", align: "left" },
+                    { label: "PeopleNum", name: "PeopleNum", index: "PeopleNum", classes: "colStyle1", align: "left" }
+                ],
+                sortname: "dataCreateDate",//預設sort column
+                sortorder: "desc",//asc, desc
+                rownumbers: false,//是否顯示 序
+                rownumWidth: "40px",//序 width
+                pager: "#pager_1",//指定分頁id
+                viewrecords: true,//records顯示
+                gridview: true,//增加grid效能
+                loadtext: 'dataLoading',//讀取時顯示文字
+                height: "auto",
+                autowidth: true,
+                rowNum: 20//每頁顯示筆數
+            });
+
+            setGrid("grid_1", setUrl);//設定jqGrid
+        }
+
+        function dialogControl(rowID) {
+            let rowData = initView(rowID);
+            let Userdata = rowData.Userdata
+            $('#modqlEdit').attr("onclick","update('" + Userdata + "')")
+            $('#myModal').modal('show')
+        }
+
+        function joinClass(CCID){
+            let UPID = $("#" + CCID + " option:selected").val()
+
+            if(!UPID){
+                $('#errorMessageAlert').text("join student cant be empty")
+                $('#alert').modal('show')
+                return
+            }
+
+            let setUrl = url + "table=courseEnter&action=joinclass&UPID=" + UPID + "&CCID=" + CCID
+            
+            $.ajax({
+                url: setUrl,
+                data: {},
+                type: "POST",
+                cache: false,
+                success: function (data) {
+                    $('#errorMessageAlert').text("SUCCESS!")
+                    $('#alert').modal('show')
+                    refreshGrid()
+                },
+                error: function (xhr) {
+                   errorMessage = xhr.responseText.split("h1>")[1].replace('</','')
+                   $('#errorMessageAlert').text(errorMessage)
+                   $('#alert').modal('show')
+                }
+            });
+        }
+
+        function userSelect(){
+            let setUrl = url + "table=courseEnter&action=userSelect"  
+            let Option = "<option value=''>Open this select menu</option>"
+            $.ajax({
+                url: setUrl,
+                data: {},
+                type: "GET",
+                cache: false,
+                async: false,
+                success: function (data) {
+                    let obj = JSON.parse(data)
+                    if (obj.length > 0) {
+                        for (let i = 0; i < obj.length; i++) {
+                            let Userdata = obj[i].Userdata
+                            let username = obj[i].username
+                            Option += "<option value='" + Userdata + "'>" + username +"</option>"
+                        }
+                    }
+                },
+                error: function (xhr) {
+                   errorMessage = xhr.responseText.split("h1>")[1].replace('</','')
+                   $('#errorMessageAlert').text(errorMessage)
+                   $('#alert').modal('show')
+                }
+            });
+            $("#userList").html(Option)
+        }
+
+        function viewRow(CCID){
+            let setUrl = url + "table=courseEnter&action=studentStatus&CCID=" + CCID 
+            let HTML 
+            $("#couseStatus").html("")
+
+            $.ajax({
+                url: setUrl,
+                data: {},
+                type: "GET",
+                cache: false,
+                async: false,
+                success: function (data) { 
+                    let obj = JSON.parse(data)
+                    if (obj.length > 0) {
+                        for (let i = 0; i < obj.length; i++) {
+                            let CCEID = obj[i].CCEID
+                            let username = obj[i].username
+                            let phonenumber = obj[i].phonenumber
+                            let sex = obj[i].sex
+                            HTML += "<tr>"
+                            HTML += '<td><button type="button" class="btn btn-primary" onclick="exitClass(\''+ CCEID +'\')">exit</button></td>' 
+                            HTML += '<td>'+ username +'</td>' 
+                            HTML += '<td><span>'+ phonenumber +'</span></td>'
+                            HTML += '<td><span>'+ sex +'</span></td>'
+                            HTML += "</tr>"
+                        }
+                    }
+                    $("#couseStatus").html(HTML)
+                },
+                error: function (xhr) {
+                   errorMessage = xhr.responseText.split("h1>")[1].replace('</','')
+                   $('#errorMessageAlert').text(errorMessage)
+                   $('#alert').modal('show')
+                }
+            });
+        }
+
+        function exitClass(CCEID){
+            let setUrl = url + "table=courseEnter&action=exitclass&CCEID=" + CCEID
+
+            $.ajax({
+                url: setUrl,
+                data: {},
+                type: "POST",
+                cache: false,
+                success: function (data) {
+                    $('#errorMessageAlert').text("SUCCESS!")
+                    $('#alert').modal('show')
+                    refreshGrid()
+                },
+                error: function (xhr) {
+                }
+            });
+        }
+
+        function refreshSelect(where){
+            let refreshLocation = where
+            let html = "<option value=''>Open this select menu</option>"
+            html += '<option value="m">male</option>'
+            html += '<option value="f">female</option>'
+            html += ' <option value="s">secret</option>'
+            $(refreshLocation).html("")
+            $(refreshLocation).html(html)
+        }
+
+
+
+
+    </script>
+
+</body>
+
+</html>
