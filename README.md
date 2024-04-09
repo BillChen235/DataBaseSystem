@@ -13,3 +13,5 @@ https://themewagon.com/themes/free-bootstrap-4-html5-admin-dashboard-template-qu
 2.於terminal npm start 
 
 3.介面將顯示於http://localhost:3000/
+
+使用流程請參考 操作範例
